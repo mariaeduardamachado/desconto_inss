@@ -1,0 +1,52 @@
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <h1>Proponente</h1>
+  <br>
+  <%= link_to "Cadastrar",  new_proponent_path,  class:"btn btn-outline-primary" %>
+  <table class="table">
+    <thead>
+      <br>
+      <tr>
+        <br>
+        <th scope="col">Nome</th>
+        <th scope="col">CPF</th>
+        <th scope="col">Data de Nascimento</th>
+        <th scope="col">Endereço</th>
+        <th scope="col">Celular</th>
+        <th scope="col">Telefone Ref.</th>
+        <th scope="col">Salário</th>
+        <th scope="col">Valor do Desconto</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @proponents.each do |proponent| %>
+        <tr>
+          <th>
+            <%= proponent.nome %>
+          </th>
+          <th>
+            <%= proponent.decorator.cpf %>
+          </th>
+          <th>
+            <%= proponent.decorator.data_nascimento %>
+          </th>
+          <th>
+            <%= proponent.decorator.endereco %>
+          </th>
+          <th>
+            <%= proponent.telefone_pessoal %>
+          </th>
+          <th>
+            <%= proponent.telefone_referencias %>
+          </th>
+          <th>
+            <%= proponent.decorator.salario %>
+          </th>
+          <th>
+            <%= proponent.decorator.valor_desconto %>
+          </th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</main>

@@ -1,0 +1,19 @@
+pt-BR:
+  activerecord:
+    models:
+      proponent:
+    attributes:
+      proponent: &proponent
+      nome: "Nome"
+      cpf: "CPF"
+      data_nascimento: "Data de Nascimento"
+      logradouro: "Logradouro"
+      numero: "Numero"
+      bairro: "Bairro"
+      cidade: "Cidade"
+      estado: "Estado"
+      cep: "Cep"
+      telefone_pessoal: "Telefone Pessoal"
+      telefone_referencias: "Telefone de Referencia"
+      salario: "Salário"
+      valor_desconto: "Valor do Desconto" 
