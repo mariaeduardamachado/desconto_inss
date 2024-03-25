@@ -2,6 +2,7 @@
   <h1>Proponente</h1>
   <br>
   <%= link_to "Cadastrar",  new_proponent_path,  class:"btn btn-outline-primary" %>
+  <%= link_to "Gerar Relatório de Salário", salary_report_proponents_path, class: "btn btn-primary" %>
   <table class="table">
     <thead>
       <br>
@@ -25,13 +26,13 @@
             <%= proponent.nome %>
           </th>
           <th>
-            <%= proponent.decorator.cpf %>
+            <%= proponent.decorate.cpf %>
           </th>
           <th>
-            <%= proponent.decorator.data_nascimento %>
+            <%= proponent.decorate.data_nascimento %>
           </th>
           <th>
-            <%= proponent.decorator.endereco %>
+            <%= proponent.decorate.endereco %>
           </th>
           <th>
             <%= proponent.telefone_pessoal %>
@@ -40,18 +41,14 @@
             <%= proponent.telefone_referencias %>
           </th>
           <th>
-            <%= proponent.decorator.salario %>
+            <%= proponent.decorate.salario %>
           </th>
           <th>
-            <%= proponent.decorator.valor_desconto %>
+            <%= proponent.decorate.valor_desconto %>
           </th>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <ul>
-  <% @employees_by_salary_range.each do |range, count| %>
-    <li><%= range %>: <%= count %> funcionários</li>
-  <% end %>
-</ul>
+  <%= paginate @proponents %>
 </main>

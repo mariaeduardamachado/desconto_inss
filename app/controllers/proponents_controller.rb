@@ -2,12 +2,15 @@
 class ProponentsController < ApplicationController
   before_action :set_proponent_params, only: %i[show edit update destroy]
   def index
-    @proponents = Proponent.all
-    @employees_by_salary_range = Proponent.group(:salario).count
+    @proponents = Proponent.all.page(params[:page]).per(5)
   end
 
   def new
     @proponent = Proponent.new
+  end
+
+  def salary_report
+    @proponents = Proponent.all
   end
 
   def create
@@ -46,7 +49,6 @@ class ProponentsController < ApplicationController
       redirect_to destroy_proponent_path
     end
   end
-
 
   private
 

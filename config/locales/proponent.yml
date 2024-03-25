@@ -7,7 +7,7 @@ pt-BR:
       nome: "Nome"
       cpf: "CPF"
       data_nascimento: "Data de Nascimento"
-      logradouro: "Logradouro"
+      logradouro: "Rua"
       numero: "Numero"
       bairro: "Bairro"
       cidade: "Cidade"
