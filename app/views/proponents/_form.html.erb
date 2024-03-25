@@ -10,6 +10,8 @@
 
   <%= f.input :data_nascimento %>
 
+  <%= f.input :cep %>
+
   <%= f.input :cidade %>
 
   <%= f.input :estado %>
@@ -28,10 +30,7 @@
 
 
 <div class="buttons">
-
-    <%= f.button :submit, 'data-user-feedback' => 'Processando...' %>
-
-
+  <%= f.button :submit, 'data-user-feedback' => 'Processando...' %>
 </div>
 
 <% end %>

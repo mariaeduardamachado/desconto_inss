@@ -86,3 +86,5 @@ gem 'kaminari'
 gem 'simple_form'
 
 gem 'cpf_validator'
+
+gem 'byebug'

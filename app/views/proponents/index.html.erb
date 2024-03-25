@@ -49,4 +49,9 @@
       <% end %>
     </tbody>
   </table>
+  <ul>
+  <% @employees_by_salary_range.each do |range, count| %>
+    <li><%= range %>: <%= count %> funcionários</li>
+  <% end %>
+</ul>
 </main>

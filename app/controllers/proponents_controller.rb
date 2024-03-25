@@ -1,9 +1,9 @@
 # Description/Explanation of Person class
 class ProponentsController < ApplicationController
   before_action :set_proponent_params, only: %i[show edit update destroy]
-
   def index
     @proponents = Proponent.all
+    @employees_by_salary_range = Proponent.group(:salario).count
   end
 
   def new
