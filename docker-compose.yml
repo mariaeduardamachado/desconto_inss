@@ -1,0 +1,21 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6378:6379" # Alterando a porta do Redis para 6378
+    networks:
+      - desconto_inss_net
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5433:5432" # Alterando a porta do PostgreSQL para 5433
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - desconto_inss_net
+
+networks:
+  desconto_inss_net:

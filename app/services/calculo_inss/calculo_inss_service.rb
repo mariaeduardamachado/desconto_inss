@@ -1,7 +1,7 @@
 module CalculoInss
   # Description/Explanation of Person class
   class CalculoInssService
-    attr_reader :proponent_params, :current_user
+    attr_reader :proponent_params
 
     def self.run(proponent_params, current_user = User.find(User::DEFAULT_ID))
       new(proponent_params, current_user).run
@@ -10,6 +10,7 @@ module CalculoInss
     def initialize(proponent_params, current_user)
       @salario = proponent_params['salario'].to_f
       @proponent_params = proponent_params
+      @proponent = Proponent.last
     end
 
     def run
@@ -20,7 +21,6 @@ module CalculoInss
 
     def calcular_inss
       # Definir as faixas de contribuição e as taxas correspondentes
-      byebug
       faixas = [
         { faixa: (0..1100), aliquota: 0.075 },
         { faixa: (1100.01..2203.48), aliquota: 0.09 },
@@ -34,9 +34,9 @@ module CalculoInss
       if faixa_contribuicao
         # Calcular o INSS usando a aliquota correspondente
         inss =  @salario * faixa_contribuicao[:aliquota]
-        puts "O valor do INSS é: R$ #{'%.2f' % inss}"
+        @proponent.update(valor_desconto:inss)
       else
-        puts "Salário fora das faixas de contribuição para cálculo do INSS."
+        @proponent.update(valor_desconto:"0.0")
       end
     end
   end

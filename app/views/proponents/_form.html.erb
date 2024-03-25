@@ -1,16 +1,11 @@
 <%= simple_form_for @proponent do |f| %>
-  <div class="row">
-    <div class="col-xs-3">
-      <%= f.input :nome %>
-    </div>
-    <div class="col-xs-3">
-      <%= f.input :cpf, input_html: { data: { mask: "999.999.999-99" } } %>
-    </div>
-  </div>
+  <%= f.input :nome %>
 
-  <%= f.input :data_nascimento %>
+  <%= f.input :cpf, input_html: { data: { mask: "999.999.999-99" } } %>
 
-  <%= f.input :cep %>
+  <%= f.input :data_nascimento, as: :string, input_html: { type: 'date' }%>
+
+  <%= f.input :cep, label: "CEP" %>
 
   <%= f.input :cidade %>
 
@@ -29,8 +24,9 @@
   <%= f.input :salario %>
 
 
-<div class="buttons">
-  <%= f.button :submit, 'data-user-feedback' => 'Processando...' %>
-</div>
+  <div class="buttons">
+    <%= f.button :submit, 'Salvar', 'data-user-feedback' => 'Processando...',  class:"btn btn-outline-primary" %>
+    <%= link_to "Voltar",  proponents_path,  class:"btn btn-outline-danger" %>
+  </div>
 
 <% end %>

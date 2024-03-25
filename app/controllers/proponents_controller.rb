@@ -1,6 +1,7 @@
 # Description/Explanation of Person class
 class ProponentsController < ApplicationController
   before_action :set_proponent_params, only: %i[show edit update destroy]
+
   def index
     @proponents = Proponent.all.page(params[:page]).per(5)
   end
@@ -9,15 +10,10 @@ class ProponentsController < ApplicationController
     @proponent = Proponent.new
   end
 
-  def salary_report
-    @proponents = Proponent.all
-  end
-
   def create
-    @calulo_inss = CalculoInss::CalculoInssService.run(proponent_params, current_user)
-
     @proponent = Proponent.create(proponent_params)
     if @proponent.valid?
+      @calulo_inss = CalculoInss::CalculoInssService.run(proponent_params, @proponent)
       flash[:errors] = 'Proponente Created Successfully'
       redirect_to proponents_path
     else
@@ -48,6 +44,29 @@ class ProponentsController < ApplicationController
       flash[:errors] = @proponent.errors.full_messages
       redirect_to destroy_proponent_path
     end
+  end
+
+  def report
+    faixas_salariais = [
+    { faixa: 'Até R$ 1.045,00', min: 0, max: 1045 },
+    { faixa: 'De R$ 1.045,01 a R$ 2.089,60', min: 1045.01, max: 2089.6 },
+    { faixa: 'De R$ 2.089,61 até R$ 3.134,40', min: 2089.61, max: 3134.4 },
+    { faixa: 'De R$ 3.134,41 até R$ 6.101,06', min: 3134.41, max: 6101.06 }
+    ]
+
+    @contagem_por_faixa = {}
+    faixas_salariais.each do |faixa|
+      @contagem_por_faixa[faixa[:faixa]] = Proponent.where(salario: faixa[:min]..faixa[:max]).count
+    end
+  end
+
+  def update_salary
+    funcionario = Proponent.find(params[:id])
+    novo_salario = params[:novo_salario]
+
+    UpdateSalaryWorker.perform_async(funcionario.id, novo_salario)
+
+    redirect_to funcionario_path(funcionario), notice: 'Salário do funcionário está sendo atualizado.'
   end
 
   private

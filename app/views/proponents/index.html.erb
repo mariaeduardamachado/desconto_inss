@@ -2,7 +2,7 @@
   <h1>Proponente</h1>
   <br>
   <%= link_to "Cadastrar",  new_proponent_path,  class:"btn btn-outline-primary" %>
-  <%= link_to "Gerar Relatório de Salário", salary_report_proponents_path, class: "btn btn-primary" %>
+  <%= link_to "Gerar Relatório de Salário", report_proponents_path, class: "btn btn-primary" %>
   <table class="table">
     <thead>
       <br>
@@ -50,5 +50,10 @@
       <% end %>
     </tbody>
   </table>
-  <%= paginate @proponents %>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <%= will_paginate @proponents %>
+    </ul>
+  </nav>
 </main>
+

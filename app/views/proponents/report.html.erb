@@ -1,0 +1,35 @@
+<h1>Relatório de Funcionários</h1>
+
+<div id="relatorio">
+  <% @contagem_por_faixa.each do |faixa, quantidade| %>
+    <p><%= faixa %>: <%= quantidade %> funcionários</p>
+  <% end %>
+</div>
+
+<canvas id="grafico"></canvas>
+
+<script>
+  var ctx = document.getElementById('grafico').getContext('2d');
+  var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: <%= @contagem_por_faixa.keys.to_json.html_safe %>,
+      datasets: [{
+        label: 'Funcionários por Faixa Salarial',
+        data: <%= @contagem_por_faixa.values.to_json.html_safe %>,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+<%= link_to "Voltar",  proponents_path,  class:"btn btn-outline-danger" %>

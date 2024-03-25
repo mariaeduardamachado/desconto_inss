@@ -1,0 +1,4 @@
+:concurrency: 5
+:queues:
+  - default
+:url: redis://localhost:6379/0

@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
-  resources :proponents
+
   root "proponents#index"
 
   resources :proponents do
-    collection do
-      get 'salary_report'
-    end
+    get 'report', on: :collection
   end
 
-  devise_for :users, skip: [:registrations]
+  devise_for :users, skip: [:registrations], controllers: {registrations: 'users/registrations'}
   get "up" => "rails/health#show", as: :rails_health_check
 
 end
