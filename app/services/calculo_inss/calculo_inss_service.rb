@@ -3,14 +3,14 @@ module CalculoInss
   class CalculoInssService
     attr_reader :proponent_params
 
-    def self.run(proponent_params, current_user = User.find(User::DEFAULT_ID))
-      new(proponent_params, current_user).run
+    def self.run(proponent_params, params)
+      new(proponent_params, params).run
     end
 
-    def initialize(proponent_params, current_user)
+    def initialize(proponent_params, params)
       @salario = proponent_params['salario'].to_f
       @proponent_params = proponent_params
-      @proponent = Proponent.last
+      @proponent = params[:id].present? ? Proponent.find(params[:id]) : Proponent.last
     end
 
     def run

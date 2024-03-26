@@ -1,9 +1,10 @@
 # Description/Explanation of Person class
 class ProponentsController < ApplicationController
-  before_action :set_proponent_params, only: %i[show edit update destroy]
+  skip_before_action :verify_authenticity_token, only: :update_salary
+  before_action :set_proponent_params, only: %i[show edit update destroy update_salary]
 
   def index
-    @proponents = Proponent.all.page(params[:page]).per(5)
+    @proponents = Proponent.all.page(params[:page]).per(5).order(:id)
   end
 
   def new
@@ -13,7 +14,7 @@ class ProponentsController < ApplicationController
   def create
     @proponent = Proponent.create(proponent_params)
     if @proponent.valid?
-      @calulo_inss = CalculoInss::CalculoInssService.run(proponent_params, @proponent)
+      @calulo_inss = CalculoInss::CalculoInssService.run(proponent_params,params)
       flash[:errors] = 'Proponente Created Successfully'
       redirect_to proponents_path
     else
@@ -29,7 +30,7 @@ class ProponentsController < ApplicationController
   def update
     if @proponent.update(proponent_params)
       flash[:errors] = 'Proponente Updated Successfully'
-      redirect_to proponent_path(@proponent)
+      redirect_to proponents_path
     else
       flash[:errors] = @proponent.errors.full_messages
       redirect_to edit_proponent_path
@@ -61,12 +62,12 @@ class ProponentsController < ApplicationController
   end
 
   def update_salary
-    funcionario = Proponent.find(params[:id])
-    novo_salario = params[:novo_salario]
+    new_salary = params[:proponent][:salario].to_f
 
-    UpdateSalaryWorker.perform_async(funcionario.id, novo_salario)
+    UpdateSalaryWorker.perform_async(@proponent.id, new_salary)
+    @calulo_inss = CalculoInss::CalculoInssService.run(proponent_params,params)
 
-    redirect_to funcionario_path(funcionario), notice: 'Salário do funcionário está sendo atualizado.'
+    redirect_to proponents_path, notice: 'Salário atualizado com sucesso.'
   end
 
   private

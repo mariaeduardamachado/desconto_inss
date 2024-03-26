@@ -46,10 +46,33 @@
           <th>
             <%= proponent.decorate.valor_desconto %>
           </th>
+          <td>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSalaryModal<%= proponent.id %>">
+              Atualizar Salário
+            </button>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+ 
+ <% @proponents.each do |proponent| %>
+  <div class="modal fade" id="updateSalaryModal<%= proponent.id %>" tabindex="-1" aria-labelledby="updateSalaryModalLabel<%= proponent.id %>" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateSalaryModalLabel<%= proponent.id %>">Atualizar Salário</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Formulário para atualizar o salário do proponente -->
+          <%= render 'update_salary_form', proponent: proponent %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       <%= will_paginate @proponents %>

@@ -1,0 +1,19 @@
+<%= form_for(proponent, url: update_salary_proponent_path(proponent), method: :patch, remote: true) do |f| %>
+  <!-- Campos do formulário para atualizar o salário -->
+  <div class="mb-3">
+    <%= f.label :salario, class: "form-label" %>
+    <%= f.text_field :salario, class: "form-control" %>
+  </div>
+  <%= f.submit 'Atualizar', class: 'btn btn-primary' %>
+<% end %>
+
+<script>
+  $.ajax({
+  url: '<%= update_salary_proponent_path(proponent) %>',
+  type: 'PATCH',
+  beforeSend: function(xhr) {
+    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+  },
+  // Outros parâmetros da requisição
+});
+</script>

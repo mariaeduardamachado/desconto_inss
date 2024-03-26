@@ -8,7 +8,7 @@ class ProponentDecorator < Draper::Decorator
   end
 
   def data_nascimento
-    object.data_nascimento.strftime("%d/%m/%Y")
+    object&.data_nascimento&.strftime("%d/%m/%Y")
   end
 
   def endereco
