@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  devise_for :users, controllers: {registrations: 'registrations'}
-
   root to: 'proponents#index'
 
   resources :proponents do
@@ -9,4 +7,5 @@ Rails.application.routes.draw do
     patch 'update_salary', on: :member
   end
 
+  devise_for :users, controllers: {registrations: 'users/registrations'}
 end
